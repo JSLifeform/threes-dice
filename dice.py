@@ -5,12 +5,13 @@ import random
 
 #initialize generic die
 class Die:
-    def __init__(self, sides = 6, value = 0):
+    def __init__(self, sides = 6, value = 0, locked = False):
         if not sides >= 2:
             raise ValueError("Must have at least 2 sides to randomize die!")
         if not isinstance(sides, int):
             raise ValueError("The number of sides of a die must be an integer, silly goose!")
         self.value = value or random.randint(1, sides)
+        self.locked = locked
 
     def __int__(self):
         return self.value
@@ -33,10 +34,17 @@ class Die:
     def __le__(self, other):
         return int(self) <= other    
 
+    def __cmp__(self, other):
+        if self.value == 3:
+            return -1
+
+    # def __repr__(self):
+    #     return str(self.value)
+
 #initialize d6 class
 class D6(Die):
-    def __init__(self, value = 0):
-        super().__init__(sides = 6,  value = value)
+    def __init__(self, value = 0, locked = False):
+        super().__init__(sides = 6,  value = value, locked = False)
 
 #initialize d4 class
 class D4(Die):
