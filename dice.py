@@ -1,4 +1,4 @@
-#threes dice game
+#threes dice game dice module
 
 #import random for dice rolling
 import random

@@ -8,13 +8,18 @@ class Hand(list):
     def __init__(self, size = 5, die_type = D6, locked = False, *args, **kwargs):
         super().__init__()
 
+        self.die_type = die_type
+        self.size = size
+
         for _ in range(size):
             self.append(die_type())
         self.sort(key = threes_low)
 
 # key function to sort list with 3's at the beginning
 def threes_low(item):
-    if int(item) == 3:
+    if item.locked == True:
+        return -1
+    elif int(item) == 3:
         return 0
     else:
         return int(item)        
@@ -31,6 +36,12 @@ def check_int():
         else:
             return answer
 
+def lock_dice():
+    score = 0
+    for dice in range(0, kept_dice):
+        h[dice].locked = True
+        score += threes_low(dice.value)
+    return score
 
 
 h = Hand()
@@ -54,6 +65,17 @@ while kept_dice < 5:
     elif answer <= 1:
         print("Must keep at least 1 die per round.")
 
-
+    # lock all dice user has decided to keep
+    print(f"Your score is currently UNSCORED:")
     for _ in range(0, kept_dice):
         h[_].locked = True
+
+    # removes all unkept dice
+    del h[kept_dice: ]
+
+    # add new dice to hand in place of unlocked dice
+    for _ in range(kept_dice, h.size):
+        h.append(h.die_type())
+
+    # re-sort list
+    h.sort(key = threes_low)
