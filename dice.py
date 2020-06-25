@@ -5,7 +5,7 @@ import random
 
 #initialize generic die
 class Die:
-    def __init__(self, sides = 6, value = 0, locked = False):
+    def __init__(self, sides = 6, value = 0, score = 0, locked = False):
         if not sides >= 2:
             raise ValueError("Must have at least 2 sides to randomize die!")
         if not isinstance(sides, int):

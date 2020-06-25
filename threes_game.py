@@ -15,7 +15,7 @@ class Hand(list):
             self.append(die_type())
         self.sort(key = threes_low)
 
-# key function to sort list with 3's at the beginning
+# key function to sort list with locked dice then 3's at the beginning
 def threes_low(item):
     if item.locked == True:
         return -1
@@ -43,27 +43,43 @@ def lock_dice():
         score += threes_low(dice.value)
     return score
 
-
+# create hand and re/set kept dice to 0
 h = Hand()
 kept_dice = 0
 
+#Begin game loop of keeping dice and re-rolling hand
 while kept_dice < 5:
 
-    for dice in h:
-        print(dice.value)
-        # if dice.value == 3:
-        #     dice.locked = True
-        #     kept_dice += 1
-        print(dice.locked)
+    
         
+    
+    
 
-    answer = check_int()
-    if answer >= 1 and answer + kept_dice <= len(h):
-        kept_dice += answer
-    elif kept_dice + answer > len(h):
-        print(f"Too many dice! Only {len(h)} dice total!") 
-    elif answer <= 1:
-        print("Must keep at least 1 die per round.")
+    
+    while True:
+        
+        # prints dice to screen in loop
+        for dice in h:
+            print(dice.value)
+            # Below 3 lines in case I want 3's to be automatically kept?
+            # if dice.value == 3:
+            #     dice.locked = True
+            #     kept_dice += 1
+            print(dice.locked)
+
+        # checks that answer is integer
+        answer = check_int()
+        
+        # checks that number of dice kept is 1 to total unkept dice
+        if answer >= 1 and answer + kept_dice <= len(h):
+            kept_dice += answer
+            break
+        elif kept_dice + answer > len(h):
+            print(f"Too many dice! Only {len(h)} dice total!") 
+            continue
+        elif answer <= 1:
+            print("Must keep at least 1 die per round.")
+            continue
 
     # lock all dice user has decided to keep
     print(f"Your score is currently UNSCORED:")
