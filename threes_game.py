@@ -3,7 +3,7 @@ from dice import Die, D6
 
 
 
-
+# initializes hand of dice
 class Hand(list):
     def __init__(self, size = 5, die_type = D6, locked = False, *args, **kwargs):
         super().__init__()
@@ -37,11 +37,11 @@ def check_int():
             return answer
 
 def lock_dice():
-    score = 0
+    # score = 0 <---deprecated, delete?
     for dice in range(0, kept_dice):
         h[dice].locked = True
         score += threes_low(dice.value)
-    return score
+    # return score <--- deprecated, delete?
 
 # create hand and re/set kept dice to 0
 h = Hand()
@@ -49,23 +49,19 @@ kept_dice = 0
 
 #Begin game loop of keeping dice and re-rolling hand
 while kept_dice < 5:
-
-    
-        
-    
-    
-
     
     while True:
         
         # prints dice to screen in loop
         for dice in h:
-            print(dice.value)
             # Below 3 lines in case I want 3's to be automatically kept?
             # if dice.value == 3:
             #     dice.locked = True
             #     kept_dice += 1
-            print(dice.locked)
+            if dice.locked == True:
+                print(str(dice.value) + " KEPT")
+            else: 
+                print(dice.value)
 
         # checks that answer is integer
         answer = check_int()
@@ -81,10 +77,15 @@ while kept_dice < 5:
             print("Must keep at least 1 die per round.")
             continue
 
+    # initialize score to be tallied in loop below
+    score = 0
     # lock all dice user has decided to keep
-    print(f"Your score is currently UNSCORED:")
     for _ in range(0, kept_dice):
         h[_].locked = True
+        score = score + h[_].score
+    #checks to see if game is over, prints current score if not
+    if kept_dice < 5:   
+        print(f"Your score is currently {score}")
 
     # removes all unkept dice
     del h[kept_dice: ]
@@ -95,3 +96,5 @@ while kept_dice < 5:
 
     # re-sort list
     h.sort(key = threes_low)
+
+print(f"GAME OVER, man! Your final score is {score}")

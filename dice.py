@@ -12,6 +12,10 @@ class Die:
             raise ValueError("The number of sides of a die must be an integer, silly goose!")
         self.value = value or random.randint(1, sides)
         self.locked = locked
+        if self.value == 3:
+            self.score = 0
+        else:
+            self.score = self.value
 
     def __int__(self):
         return self.value

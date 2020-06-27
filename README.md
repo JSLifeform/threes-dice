@@ -1,1 +1,3 @@
 # threes-dice
+
+This is a dice game called threes. You typically play with 5 D6's. You roll all 5 dice to start. You may choose to keep any number of dice after you roll, but you must keep at least one per round. Your score is equal to the value shown on the dice with one exception; 3's score as zero. Lowest score is the winner. A "perfect" game is where you score 0, meaning you show all 3's on the dice you keep. 
